@@ -2,7 +2,24 @@ import Post from '../models/Post.model.js'
 
 export const list = async (req, res) => {
     try {
-        const items = await Post.find()
+        const { search, category } = req.query
+        let query = {}
+
+        // Search functionality
+        if (search) {
+            query.$or = [
+                { title: { $regex: search, $options: 'i' } },
+                { content: { $regex: search, $options: 'i' } }
+            ]
+        }
+
+        // Filter by category 
+        if (category && category !== 'All') {
+            query.category = category
+        }
+
+        const items = await Post.find(query).sort({ createdAt: -1 })
+        
         res.json(items)
     } catch (err) {
         res.status(500).json({ error: 'Failed to retrieve posts.' })
