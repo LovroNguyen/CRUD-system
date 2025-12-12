@@ -50,13 +50,6 @@ const remove = async (id) => {
   }
 }
 
-const handleSearch = () => {
-  load()
-}
-
-const handleCategoryChange = () => {
-  load()
-}
 
 onMounted(load)
 </script>
@@ -82,7 +75,7 @@ onMounted(load)
           <label class="block text-sm font-semibold text-gray-700 mb-2">Search Posts</label>
           <input 
             v-model="searchQuery" 
-            @input="handleSearch"
+            @input="load"
             placeholder="Search by title or content..." 
             type="text"
             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
@@ -93,7 +86,7 @@ onMounted(load)
           <label class="block text-sm font-semibold text-gray-700 mb-2">Filter by Category</label>
           <select 
             v-model="selectedCategory" 
-            @change="handleCategoryChange"
+            @change="load"
             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           >
             <option v-for="cat in categories" :key="cat" :value="cat">
